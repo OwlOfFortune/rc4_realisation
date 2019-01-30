@@ -12,4 +12,6 @@ void encode(unsigned char *plain_text, int size, unsigned char *k, int r);
 
 void decode(unsigned char *plain_text, int size, unsigned char *k, int r);
 
+void gen_key(unsigned char *k, int r);
+
 #endif // FUNC_H
