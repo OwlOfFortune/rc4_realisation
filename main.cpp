@@ -4,10 +4,11 @@ using namespace std;
 
 int main()
 {
-    unsigned char r;
-    unsigned char s[256];
-    unsigned char q1 = 0, q2 = 0;
-    unsigned char plain_text[512] = "", ciphertext[512] = "";
+    int r;
+    unsigned char data[512];
+
+    cout << "Enter plain text\n";
+    cin.getline((char*)data, sizeof (data), '\n');
 
     cout << "Enter len of key: 16 or 32\n";
     cin >> r;
@@ -16,26 +17,18 @@ int main()
         cerr << "Len incorrect\n";
         return 0;
     }
+
     unsigned char k[r];
-
     cout << "Enter k_i with space or enter:\n";
-    for(unsigned char i = 0; i<r; ++i) cin >> k[i];
+    for(int i = 0; i<r; ++i) k[i] = 1;
 
+    encode(data, sizeof (data), k, r);
+    cout << "Encrypted: ";
+    for(int i = 0; i < sizeof (data); ++i)
+        cout << (int)data[i] << ' ';
 
-
-    cout << "enter plain text\n";
-    fgets((char*)plain_text, sizeof (plain_text), stdin);
-    memcpy(ciphertext, plain_text, sizeof (plain_text));
-
-    init(s, k, r);
-    encode(ciphertext, sizeof (plain_text), s, &q1, &q2);
-    cout << "Encrypted: " << ciphertext << '\n';
-    memcpy(plain_text, ciphertext, sizeof (ciphertext));
-
-    init(s, k, r);
-    q1 = 0; q2 = 0;
-    decode(plain_text, sizeof(plain_text), s, &q1, &q2);
-    cout << "Decrypted: " << plain_text << '\n';
+    decode(data, sizeof(data), k, r);
+    cout << "Decrypted: " << data << '\n';
 
     return 0;
 }
