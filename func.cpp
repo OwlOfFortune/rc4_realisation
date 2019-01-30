@@ -44,6 +44,8 @@ void encode(unsigned char *plain_text, int size, unsigned char *k, int r){
     unsigned char q1 = 0, q2 = 0;
     init(s, k, r);
 
+    for(int i = 0; i < 768; ++i) get_gamma(&q1, &q2, s);
+
     for(int i = 0; i < size; ++i)
         plain_text[i] ^= get_gamma(&q1, &q2, s);
 }
