@@ -1,9 +1,9 @@
 #include "func.h"
 
 
-void init(int *s, int *k, const int r){
-    unsigned  q = 0;
-    int temp;
+void init(unsigned char *s, unsigned char *k, const unsigned char r){
+    unsigned char q = 0;
+    unsigned char temp;
     for(int i = 0; i != 255; ++i) s[i] = i;
     for(int i = 0; i != 255; ++i){
         q = (q + s[i] + k[i] % r) % 256;
@@ -15,8 +15,8 @@ void init(int *s, int *k, const int r){
 }
 
 
-int get_gamma(int *q1, int *q2, int *s){
-    int temp;
+unsigned char get_gamma(unsigned char *q1, unsigned char *q2, unsigned char *s){
+    unsigned char temp;
 
     *q1 = (*q1 + 1) % 256;
     *q2 = (*q2 + s[*q1]) % 256;
@@ -29,15 +29,13 @@ int get_gamma(int *q1, int *q2, int *s){
 }
 
 
-std::string encode(std::string plain_text, int *s, int *q1, int *q2){
-    std::string ciphertext = "";
-    for(std::size_t i = 0; i < plain_text.length(); ++i)
-        ciphertext += plain_text[i] ^ get_gamma(q1, q2, s);
-    return ciphertext;
+void encode(unsigned char *plain_text, int size, unsigned char *s, unsigned char *q1, unsigned char *q2){
+    for(int i = 0; i < size; ++i)
+        plain_text[i] ^= get_gamma(q1, q2, s);
 }
 
-std::string decode(std::string plain_text, int *s, int *q1, int *q2){
-    return encode(plain_text, s, q1, q2);
+void decode(unsigned char *plain_text, int size, unsigned char *s, unsigned char *q1, unsigned char *q2){
+    encode(plain_text, size, s, q1, q2);
 }
 
 

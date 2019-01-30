@@ -1,15 +1,15 @@
 #ifndef FUNC_H
 #define FUNC_H
 
-#include <string>
 #include <iostream>
+#include <cstring>
 
-void init(int *s, int *k, const int r);
+void init(unsigned char *s, unsigned char *k, const unsigned char r);
 
-int get_gamma(int *q1, int *q2, int *s);
+unsigned char get_gamma(unsigned char *q1, unsigned char *q2, unsigned char *s);
 
-std::string encode(std::string plain_text, int *s, int *q1, int *q2);
+void encode(unsigned char *plain_text, int size, unsigned char *s, unsigned char *q1, unsigned char *q2);
 
-std::string decode(std::string plain_text, int *s, int *q1, int *q2);
+void decode(unsigned char *plain_text, int size, unsigned char *s, unsigned char *q1, unsigned char *q2);
 
 #endif // FUNC_H

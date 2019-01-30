@@ -1,41 +1,41 @@
 #include "func.h"
 
-
 using namespace std;
 
 int main()
 {
-    int r;
-    int s[256];
-    int q1 = 0, q2 = 0;
-    std::string plain_text, ciphertext;
+    unsigned char r;
+    unsigned char s[256];
+    unsigned char q1 = 0, q2 = 0;
+    unsigned char plain_text[512] = "", ciphertext[512] = "";
 
-    cout << "enter len of key: 16 or 32\n";
+    cout << "Enter len of key: 16 or 32\n";
     cin >> r;
 
     if(r != 16 && r != 32){
-        cerr << "len incorrect\n";
+        cerr << "Len incorrect\n";
         return 0;
     }
-    int k[r];
+    unsigned char k[r];
 
-    cout << "enter k_i with space or enter:\n";
+    cout << "Enter k_i with space or enter:\n";
     for(unsigned char i = 0; i<r; ++i) cin >> k[i];
 
 
-    init(s, k, r);
 
     cout << "enter plain text\n";
-    cin >> plain_text;
+    fgets((char*)plain_text, sizeof (plain_text), stdin);
+    memcpy(ciphertext, plain_text, sizeof (plain_text));
 
-    ciphertext = encode(plain_text, s, &q1, &q2);
-
-    cout << ciphertext << '\n';
+    init(s, k, r);
+    encode(ciphertext, sizeof (plain_text), s, &q1, &q2);
+    cout << "Encrypted: " << ciphertext << '\n';
+    memcpy(plain_text, ciphertext, sizeof (ciphertext));
 
     init(s, k, r);
     q1 = 0; q2 = 0;
-    cout << decode(ciphertext, s, &q1, &q2);
-
+    decode(plain_text, sizeof(plain_text), s, &q1, &q2);
+    cout << "Decrypted: " << plain_text << '\n';
 
     return 0;
 }
